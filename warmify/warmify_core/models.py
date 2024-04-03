@@ -32,3 +32,8 @@ class Schedule(models.Model):
     date = models.DateField("Schedule date")
     day_schedule = models.JSONField()
     device = models.ForeignKey(IotDevice, on_delete=models.CASCADE)
+
+class Temperature(models.Model):
+    value = models.FloatField("temperature value")
+    timestamp = models.DateTimeField(auto_now_add=True)
+    device = models.ForeignKey(IotDevice, on_delete=models.CASCADE)
