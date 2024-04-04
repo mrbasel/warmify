@@ -3,6 +3,7 @@ from django.http import HttpResponse, JsonResponse
 from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import csrf_exempt
 import json
+from datetime import datetime
 from .models import IotDevice, Event
 from .utils import get_schedule
 
@@ -34,13 +35,16 @@ def log_event(request):
 
 @csrf_exempt
 @require_http_methods(['GET'])
-def schedule(request):
-    token = request.META.get("HTTP_X_API_KEY") 
+def get_heater_status(request):
+    token = request.META.get("HTTP_AUTHORIZATION") 
     device = IotDevice.objects.filter(token=token).first()
     if not token or not device:
         return JsonResponse({'message': 'invalid token'}, status=400)
 
+    current_datetime = datetime.now()
     schedule = get_schedule(device.id)
+    should_turn_on_heater = False
+    if schedule[current_datetime.hour]:
+        should_turn_on_heater = True
 
-    return JsonResponse({'data': schedule})
-
+    return JsonResponse({'status': should_turn_on_heater})

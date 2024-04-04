@@ -6,5 +6,5 @@ from . import views
 urlpatterns = [
     path('ping/', views.ping, name='ping'),
     path('log/', views.log_event, name='log'),
-    path('schedule/', views.schedule, name='schedule'),
+    path('status/', views.get_heater_status, name='status'),
 ]
