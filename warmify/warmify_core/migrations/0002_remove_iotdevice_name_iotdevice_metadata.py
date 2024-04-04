@@ -6,17 +6,17 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('warmify_core', '0001_initial'),
+        ("warmify_core", "0001_initial"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='iotdevice',
-            name='name',
+            model_name="iotdevice",
+            name="name",
         ),
         migrations.AddField(
-            model_name='iotdevice',
-            name='metadata',
+            model_name="iotdevice",
+            name="metadata",
             field=models.JSONField(default={}),
         ),
     ]

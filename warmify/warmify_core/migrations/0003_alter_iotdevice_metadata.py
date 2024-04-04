@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('warmify_core', '0002_remove_iotdevice_name_iotdevice_metadata'),
+        ("warmify_core", "0002_remove_iotdevice_name_iotdevice_metadata"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='iotdevice',
-            name='metadata',
+            model_name="iotdevice",
+            name="metadata",
             field=models.JSONField(default=dict),
         ),
     ]

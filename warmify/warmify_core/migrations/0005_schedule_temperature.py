@@ -7,26 +7,54 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('warmify_core', '0004_alter_event_metadata_alter_iotdevice_metadata'),
+        ("warmify_core", "0004_alter_event_metadata_alter_iotdevice_metadata"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Schedule',
+            name="Schedule",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('date', models.DateField(verbose_name='Schedule date')),
-                ('day_schedule', models.JSONField()),
-                ('device', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='warmify_core.iotdevice')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("date", models.DateField(verbose_name="Schedule date")),
+                ("day_schedule", models.JSONField()),
+                (
+                    "device",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="warmify_core.iotdevice",
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='Temperature',
+            name="Temperature",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('value', models.FloatField(verbose_name='temperature value')),
-                ('timestamp', models.DateTimeField(auto_now_add=True)),
-                ('device', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='warmify_core.iotdevice')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("value", models.FloatField(verbose_name="temperature value")),
+                ("timestamp", models.DateTimeField(auto_now_add=True)),
+                (
+                    "device",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="warmify_core.iotdevice",
+                    ),
+                ),
             ],
         ),
     ]
