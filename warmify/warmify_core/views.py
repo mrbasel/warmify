@@ -8,6 +8,7 @@ from .models import IotDevice, Event
 from .utils import get_schedule
 
 
+@csrf_exempt
 def ping(request):
     return JsonResponse({"message": "PONG"})
 
