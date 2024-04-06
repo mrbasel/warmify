@@ -31,9 +31,9 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    # 'warmify_core.apps.WarmifyCoreConfig',
     "warmify_core",
     "warmify",
+    "warmify_dashboard",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",

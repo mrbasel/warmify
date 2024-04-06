@@ -21,4 +21,5 @@ from django.urls import path, include
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/", include("warmify_core.urls")),
+    path("", include("warmify_dashboard.urls")),
 ]
