@@ -1,11 +1,45 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-</head>
-<body>
-    <h1>Dashboard</h1>
-</body>
-</html>
+{% extends "warmify_dashboard/base.html" %}
+
+
+{% block main %}
+<div class="container-xl">
+    <div class="row row-deck row-cards">
+        <div class="col-sm-6 col-lg-4">
+            <div class="card">
+                <div class="card-body" style="height: 10rem"></div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-lg-4">
+            <div class="card">
+                <div class="card-body" style="height: 10rem"></div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-lg-4">
+            <div class="card">
+                <div class="card-body" style="height: 10rem"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-xl mt-3">
+    <div class="">
+        <div class="card">
+            <div class="card-body" style="height: 20rem"></div>
+        </div>
+    </div>
+</div>
+<div class="container-xl mt-3">
+    <div class="row row-deck row-cards">
+        <div class="col-6">
+            <div class="card">
+                <div class="card-body" style="height: 20rem"></div>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="card">
+                <div class="card-body" style="height: 20rem"></div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
