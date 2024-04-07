@@ -1,22 +1,46 @@
 {% extends "warmify_dashboard/base.html" %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'warmify_dashboard/index.css' %}">
+<script defer src="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta17/dist/libs/apexcharts/dist/apexcharts.min.js"></script>
+<script defer src="{% static 'warmify_dashboard/events-chart.js' %}"></script>
+{% endblock %}
 
 
 {% block main %}
 <div class="container-xl">
     <div class="row row-deck row-cards">
-        <div class="col-sm-6 col-lg-4">
+        <div class="col-sm-6 col-lg-3">
             <div class="card">
-                <div class="card-body" style="height: 10rem"></div>
+                <div class="card-body">
+                    <h3 class="stat-card-title text-secondary">TOTAL EVENTS</h3>
+                    <p class="stat-card-text">113</p>
+                </div>
             </div>
         </div>
-        <div class="col-sm-6 col-lg-4">
+        <div class="col-sm-6 col-lg-3">
             <div class="card">
-                <div class="card-body" style="height: 10rem"></div>
+                <div class="card-body">
+                    <h3 class="stat-card-title text-secondary">SAVINGS PERCENTAGE</h3>
+                    <p class="stat-card-text">35%</p>
+                </div>
             </div>
         </div>
-        <div class="col-sm-6 col-lg-4">
+        <div class="col-sm-6 col-lg-3">
             <div class="card">
-                <div class="card-body" style="height: 10rem"></div>
+                <div class="card-body">
+                    <h3 class="stat-card-title text-secondary">MOST ACTIVE TIME</h3>
+                    <p class="stat-card-text">9PM-10PM</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="stat-card-title text-secondary">WATER USAGE (L)</h3>
+                    <p class="stat-card-text">53</p>
+                </div>
             </div>
         </div>
     </div>
@@ -24,7 +48,9 @@
 <div class="container-xl mt-3">
     <div class="">
         <div class="card">
-            <div class="card-body" style="height: 20rem"></div>
+            <div class="card-body">
+                <div id="events-chart" class="chart-lg"></div>
+            </div>
         </div>
     </div>
 </div>
