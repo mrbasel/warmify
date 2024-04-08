@@ -18,35 +18,35 @@
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <h1 class="navbar-brand navbar-brand-autodark">
-                        <a href="#">
+                        <a href="{% url 'index' %}">
                             <span>Warmify</span>
                         </a>
                     </h1>
                     <div class="collapse navbar-collapse" id="sidebar-menu">
                         <ul class="navbar-nav pt-lg-3">
                             <li class="nav-item">
-                                <a class="nav-link active" href="./">
+                                <a class="nav-link active" href="{% url 'index' %}">
                                     <span class="nav-link-title">
                                         Dashboard
                                     </span>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">
+                                <a class="nav-link" href="{% url 'logs' %}">
                                     <span class="nav-link-title">
                                         Logs
                                     </span>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">
+                                <a class="nav-link" href="{% url 'reports' %}">
                                     <span class="nav-link-title">
                                         Reports
                                     </span>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">
+                                <a class="nav-link" href="{% url 'settings' %}">
                                     <span class="nav-link-title">
                                         Settings
                                     </span>

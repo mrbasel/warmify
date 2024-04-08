@@ -4,6 +4,8 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    # path("ping/", views.ping, name="ping"),
-    path("", views.index, name="index")
+    path("", views.index, name="index"),
+    path("reports/", views.reports, name="reports"),
+    path("logs/", views.logs, name="logs"),
+    path("settings/", views.settings, name="settings"),
 ]
