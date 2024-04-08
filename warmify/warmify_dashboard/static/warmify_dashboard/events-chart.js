@@ -81,13 +81,5 @@ document.addEventListener("DOMContentLoaded", function() {
                 vertical: 8
             },
         },
-        title: {
-            text: "TODAYS EVENTS",
-            align: "center",
-            style: {
-                color: "#616876",
-                fontWeight: "normal"
-            }
-        }
     })).render();
 });
