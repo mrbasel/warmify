@@ -10,70 +10,8 @@
         {% endblock %}
     </head>
     <body>
-        <div class="page">
-            <!-- Sidebar -->
-            <aside class="navbar navbar-vertical navbar-expand-sm navbar-dark">
-                <div class="container-fluid">
-                    <button class="navbar-toggler" type="button">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <h1 class="navbar-brand navbar-brand-autodark">
-                        <a href="{% url 'index' %}">
-                            <span>Warmify</span>
-                        </a>
-                    </h1>
-                    <div class="collapse navbar-collapse" id="sidebar-menu">
-                        <ul class="navbar-nav pt-lg-3">
-                            <li class="nav-item">
-                                <a class="nav-link active" href="{% url 'index' %}">
-                                    <span class="nav-link-title">
-                                        Dashboard
-                                    </span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{% url 'logs' %}">
-                                    <span class="nav-link-title">
-                                        Logs
-                                    </span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{% url 'reports' %}">
-                                    <span class="nav-link-title">
-                                        Reports
-                                    </span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{% url 'settings' %}">
-                                    <span class="nav-link-title">
-                                        Settings
-                                    </span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </aside>
-            <main class="page-wrapper">
-                <div class="page-header d-print-none">
-                    <div class="container-xl">
-                        <div class="row g-2 align-items-center">
-                            <div class="col">
-                                <h2 class="page-title">
-                                    Dashboard
-                                </h2>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="page-body">
-                    {% block main %}
-                    {% endblock %}
-                </div>
-            </main>
-        </div>
-
+        <main class="page">
+            {% block main %}{% endblock %}
+        </main>
     </body>
 </html>

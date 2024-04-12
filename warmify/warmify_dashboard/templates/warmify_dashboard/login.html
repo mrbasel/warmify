@@ -1,0 +1,43 @@
+{% extends "warmify_dashboard/base.html" %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'warmify_dashboard/login.css' %}">
+{% endblock %}
+
+{% block main %}
+
+<div class="card w-100 m-auto login-form">
+    {% if form.errors %}
+    <p class="text-warning">Your username and password didn't match. Please try again.</p>
+    {% endif %}
+
+    {% if next %}
+    {% if user.is_authenticated %}
+    <p class="text-warning">Your account doesn't have access to this page. To proceed,
+    please login with an account that has access.</p>
+    {% else %}
+    <p class="text-warning">Please login to see this page.</p>
+    {% endif %}
+    {% endif %}
+
+    <form method="post" action="{% url 'login' %}">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label class="form-label" for="{{ form.username.id_for_label }}">Username</label>
+            {{ form.username|add_class:"form-control" }}
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="{{ form.password.id_for_label }}">Password</label>
+            {{ form.password|add_class:"form-control" }}
+        </div>
+
+        <input type="submit" class="btn" value="Login">
+        <input type="hidden" name="next" value="{{ next }}">
+    </form>
+
+
+</div>
+
+{% endblock %}
