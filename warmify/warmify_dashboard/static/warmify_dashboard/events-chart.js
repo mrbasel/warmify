@@ -1,15 +1,16 @@
-
+const URL = `${window.location.origin}`
 const times = Array.from({length: 24}, (_, i) => i);
-// const dummyData = times.map(() => [Math.random() * 401])
-const dummyData = times.map(() => Math.floor(Math.random() * 51))
-console.log(dummyData)
 
 function labelFormatter(timeLabel) {
     if (timeLabel < 10) return `0${timeLabel}:00`
     else return `${timeLabel}:00`
 }
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", async function() {
+    const data = await fetch(`${URL}/get_events/`).then((res) => res.json()).then((data) => data)
+    const events = data.events
+    console.log({events});
+
     window.ApexCharts && (new ApexCharts(document.getElementById("events-chart"), {
         chart: {
             type: "bar",
@@ -37,7 +38,7 @@ document.addEventListener("DOMContentLoaded", function() {
         },
         series: [{
             name: "Events",
-            data: dummyData
+            data: events
         }],
         grid: {
             padding: {

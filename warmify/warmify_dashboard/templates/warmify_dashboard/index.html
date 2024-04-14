@@ -15,7 +15,7 @@
             <div class="card">
                 <div class="card-body">
                     <h3 class="stat-card-title text-secondary">TOTAL EVENTS</h3>
-                    <p class="stat-card-text">113</p>
+                    <p class="stat-card-text">{{ events_count }}</p>
                 </div>
             </div>
         </div>
@@ -23,7 +23,7 @@
             <div class="card">
                 <div class="card-body">
                     <h3 class="stat-card-title text-secondary">SAVINGS PERCENTAGE</h3>
-                    <p class="stat-card-text">35%</p>
+                    <p class="stat-card-text">{{ saving_percentage }}%</p>
                 </div>
             </div>
         </div>
@@ -31,15 +31,15 @@
             <div class="card">
                 <div class="card-body">
                     <h3 class="stat-card-title text-secondary">MOST ACTIVE TIME</h3>
-                    <p class="stat-card-text">9PM-10PM</p>
+                    <p class="stat-card-text">{{ active_time }}</p>
                 </div>
             </div>
         </div>
         <div class="col-sm-6 col-lg-3">
             <div class="card">
                 <div class="card-body">
-                    <h3 class="stat-card-title text-secondary">WATER USAGE (L)</h3>
-                    <p class="stat-card-text">53</p>
+                    <h3 class="stat-card-title text-secondary">WATER USAGE</h3>
+                    <p class="stat-card-text">{{ water_usage }}L</p>
                 </div>
             </div>
         </div>
