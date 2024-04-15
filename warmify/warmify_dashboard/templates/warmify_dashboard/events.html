@@ -57,7 +57,15 @@
                     </a>
                 </li>
                 {% endif %}
-                <li class="page-item active mx-2"><a class="page-link" href="#">{{ page_obj.number }}</a></li>
+                {% for i in range %}
+                {% if i == page_obj.number %}
+                <li class="page-item active mx-2"><a class="page-link" href="#">{{ i }}</a></li>
+                {% elif i == "…" %}
+                <li class="page-item mx-2">{{ i }}</li>
+                {% else %}
+                <li class="page-item mx-2"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                {% endif %}
+                {% endfor %}
                 <li class="page-item">
                     <a class="page-link" href="?page={{ page_obj.next_page_number }}">
                         next

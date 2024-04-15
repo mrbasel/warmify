@@ -36,8 +36,9 @@ def events(request):
     paginator = Paginator(all_events, 20)
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
+    range = list(paginator.get_elided_page_range(page_number))
 
-    context = {"page_obj": page_obj}
+    context = {"page_obj": page_obj, "range": range}
     return render(request, "warmify_dashboard/events.html", context)
 
 
