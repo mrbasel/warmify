@@ -2,6 +2,7 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.conf import settings
 import uuid
+from datetime import datetime, time
 
 
 class User(AbstractUser):
@@ -25,6 +26,17 @@ class Event(models.Model):
     def __str__(self):
         return "Event {} at {}".format(
             self.id, self.timestamp.strftime("%d/%m/%y, %H:%M:%S")
+        )
+
+    @classmethod
+    def get_todays_events(cls, device_id):
+        today = datetime.today()
+        today_start = datetime.combine(today, time.min)
+        today_end = datetime.combine(today, time.max)
+        return (
+            cls.objects.filter(device=device_id)
+            .filter(timestamp__gte=today_start)
+            .filter(timestamp__lte=today_end)
         )
 
 

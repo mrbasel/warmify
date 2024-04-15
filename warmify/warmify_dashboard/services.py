@@ -1,18 +1,11 @@
-from datetime import datetime, time
+from warmify_core.events import get_events_count_by_hour
 from warmify_core.models import Event
-from warmify_core.utils import get_schedule
+from warmify_core.schedules import get_schedule
 from math import floor
 
 
 def fetch_dashboard_stats(device_id):
-    today = datetime.today()
-    today_start = datetime.combine(today, time.min)
-    today_end = datetime.combine(today, time.max)
-    todays_events = (
-        Event.objects.filter(device=device_id)
-        .filter(timestamp__gte=today_start)
-        .filter(timestamp__lte=today_end)
-    )
+    todays_events = Event.get_todays_events(device_id)
 
     schedule = get_schedule(device_id)
     saving_percentage = floor(schedule.count(0) / 24 * 100)
@@ -32,10 +25,3 @@ def fetch_dashboard_stats(device_id):
         "events_count_by_hour": events_count_by_hour,
     }
     return data
-
-
-def get_events_count_by_hour(events):
-    events_count = [0 for _ in range(24)]
-    for e in events:
-        events_count[e.timestamp.hour] += 1
-    return events_count

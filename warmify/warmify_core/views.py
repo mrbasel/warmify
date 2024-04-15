@@ -5,7 +5,7 @@ from django.views.decorators.csrf import csrf_exempt
 import json
 from datetime import datetime
 from .models import IotDevice, Event
-from .utils import get_schedule
+from .schedules import get_schedule
 
 
 @csrf_exempt
