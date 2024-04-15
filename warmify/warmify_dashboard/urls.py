@@ -8,7 +8,7 @@ urlpatterns = [
     path("", views.index, name="index"),
     path("reports/", views.reports, name="reports"),
     path("get_events/", views.get_events, name="get_events"),
-    path("logs/", views.logs, name="logs"),
+    path("events/", views.events, name="events"),
     path("settings/", views.settings, name="settings"),
     path(
         "login/",

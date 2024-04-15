@@ -6,7 +6,8 @@ from datetime import datetime, time
 
 
 class User(AbstractUser):
-    pass
+    def get_device(self):
+        return IotDevice.objects.get(owner=self.id)
 
 
 class IotDevice(models.Model):
@@ -16,6 +17,9 @@ class IotDevice(models.Model):
 
     def __str__(self):
         return "{}'s device".format(self.owner.username)
+
+    def get_events(self):
+        return Event.objects.filter(device=self.id)
 
 
 class Event(models.Model):
@@ -38,6 +42,14 @@ class Event(models.Model):
             .filter(timestamp__gte=today_start)
             .filter(timestamp__lte=today_end)
         )
+
+    @property
+    def readable_date(self):
+        return self.timestamp.strftime("%d/%m/%y")
+
+    @property
+    def readable_time(self):
+        return self.timestamp.strftime("%H:%M:%S")
 
 
 class ScheduleInterval(models.Model):
