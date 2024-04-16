@@ -9,3 +9,25 @@
 .status-card-title {
     font-size: 1.25rem;
 }
+
+.warmify-nav-styles {
+    background-color: #fff;
+    border-bottom: 1px solid #dadfe5;
+}
+
+.warmify-nav-item {
+    position: relative;
+}
+
+@media (min-width: 768px) {
+    .warmify-active::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: -.25rem;
+        border: 0 solid #206bc4;
+        border-bottom-width: 2px;
+    }
+}
+
