@@ -9,6 +9,9 @@
 {% block main %}
 
 <div class="card w-100 m-auto login-form">
+
+    <h2 class="h2 text-center mb-4">Warmify</h2>
+
     {% if form.errors %}
     <p class="text-warning">Your username and password didn't match. Please try again.</p>
     {% endif %}
@@ -33,7 +36,7 @@
             {{ form.password|add_class:"form-control" }}
         </div>
 
-        <input type="submit" class="btn" value="Login">
+        <input type="submit" class="btn btn-primary" value="Login">
         <input type="hidden" name="next" value="{{ next }}">
     </form>
 
