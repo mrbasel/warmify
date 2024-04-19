@@ -9,6 +9,7 @@ urlpatterns = [
     path("get_events/", views.get_events, name="get_events"),
     path("events/", views.events, name="events"),
     path("settings/", views.settings, name="settings"),
+    path("setup_incomplete/", views.no_device, name="no_device"),
     path(
         "login/",
         auth_views.LoginView.as_view(

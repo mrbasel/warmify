@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta17/dist/js/tabler.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta17/dist/css/tabler.min.css">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'warmify_dashboard/index.css' %}">
+    {% block head %}
+    {% endblock %}
+</head>
+
+<body>
+    <div class="page">
+        <!-- Main header -->
+        <header class="navbar navbar-expand-md d-print-none warmify-nav-styles" >
+            <div class="container-xl">
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <h1 class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pe-0 pe-md-3">
+                  <a href="{% url 'index' %}">Warmify</a>
+              </h1>
+              <div class="navbar-nav flex-row order-md-last">
+                <div class="nav-item dropdown">
+                  <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
+                    <span class="avatar">T</span>
+                    <div class="d-none d-xl-block ps-2">
+                    <div>{{ user.username }}</div>
+                    <div class="mt-1 small text-muted">{% if user.is_staff %}Admin{% else %}User{% endif %}</div>
+                    </div>
+                  </a>
+                  <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                    <a href="#" class="dropdown-item">Status</a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item">Settings</a>
+                    <form class="d-inline" action="{% url 'logout' %}" method="post">
+                      {% csrf_token %}
+                        <button type="submit" class="dropdown-item">Logout</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </header>
+
+        <!-- Navbar -->
+
+        <main class="m-4">
+            <h2 class="text-center">Your project is not ready yet! Contact your administrator.</h2>
+        </main>
+    </div>
+
+</body>
+
+</html>
