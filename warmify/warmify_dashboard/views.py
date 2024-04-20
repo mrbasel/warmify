@@ -33,6 +33,11 @@ def reports(request):
 
 
 @login_required
+def status(request):
+    return render(request, "warmify_dashboard/status.html")
+
+
+@login_required
 def no_device(request):
     return render(request, "warmify_dashboard/no_device.html")
 

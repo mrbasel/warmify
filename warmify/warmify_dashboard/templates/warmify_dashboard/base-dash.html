@@ -34,9 +34,8 @@
                     </div>
                   </a>
                   <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    <a href="#" class="dropdown-item">Status</a>
+                      <a href="{% url 'admin:index' %}" class="dropdown-item">Admin page</a>
                     <div class="dropdown-divider"></div>
-                    <a href="#" class="dropdown-item">Settings</a>
                     <form class="d-inline" action="{% url 'logout' %}" method="post">
                       {% csrf_token %}
                         <button type="submit" class="dropdown-item">Logout</button>
@@ -66,11 +65,12 @@
                       </a>
                     </li>
                       {% url 'reports' as url %}
-                    <li class="nav-item warmify-nav-item">
+                    <li class="nav-item warmify-nav-item {% if request.path == url %}warmify-active{% endif %}">
                       <a class="nav-link" href="{{ url }}" >
                         <span class="nav-link-title">Reports</span>
                       </a>
                     </li>
+                      {% url 'status' as url %}
                     <li class="nav-item warmify-nav-item {% if request.path == url %}warmify-active{% endif %}">
                         <a class="nav-link" href="{{ url }}" >
                             <span class="nav-link-title">Status</span>
@@ -93,9 +93,7 @@
                 <div class="container-xl">
                     <div class="row g-2 align-items-center">
                         <div class="col">
-                            <h2 class="page-title">
-                                Dashboard
-                            </h2>
+                            <h2 class="page-title">{% block header %}Dashboard{% endblock %}</h2>
                         </div>
                     </div>
                 </div>
