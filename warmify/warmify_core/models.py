@@ -55,6 +55,13 @@ class Event(models.Model):
             .filter(timestamp__lte=today_end)
         )
 
+    @classmethod
+    def get_events_count_by_hour(cls, events):
+        events_count = [0 for _ in range(24)]
+        for e in events:
+            events_count[e.timestamp.hour] += 1
+        return events_count
+
     @property
     def readable_date(self):
         return self.timestamp.strftime("%d/%m/%y")

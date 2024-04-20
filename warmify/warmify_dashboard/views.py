@@ -20,8 +20,11 @@ def get_events(request):
     users_device = IotDevice.objects.filter(owner=request.user.id)
     if not users_device:
         return redirect("no_device")
-    data = fetch_dashboard_stats(users_device.first())
-    return JsonResponse({"events": data["events_count_by_hour"]})
+    device = users_device.first()
+    events_count_by_hour = Event.get_events_count_by_hour(
+        Event.get_todays_events(device.id)
+    )
+    return JsonResponse({"events": events_count_by_hour})
 
 
 @login_required
