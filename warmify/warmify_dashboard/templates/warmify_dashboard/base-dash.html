@@ -66,10 +66,15 @@
                       </a>
                     </li>
                       {% url 'reports' as url %}
-                    <li class="nav-item warmify-nav-item {% if request.path == url %}warmify-active{% endif %}">
+                    <li class="nav-item warmify-nav-item">
                       <a class="nav-link" href="{{ url }}" >
                         <span class="nav-link-title">Reports</span>
                       </a>
+                    </li>
+                    <li class="nav-item warmify-nav-item {% if request.path == url %}warmify-active{% endif %}">
+                        <a class="nav-link" href="{{ url }}" >
+                            <span class="nav-link-title">Status</span>
+                        </a>
                     </li>
                       {% url 'settings' as url %}
                     <li class="nav-item warmify-nav-item {% if request.path == url %}warmify-active{% endif %}">

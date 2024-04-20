@@ -11,7 +11,7 @@ def index(request):
     users_device = IotDevice.objects.filter(owner=request.user.id)
     if not users_device:
         return redirect("no_device")
-    context = fetch_dashboard_stats(users_device.first().id)
+    context = fetch_dashboard_stats(users_device.first())
     return render(request, "warmify_dashboard/index.html", context)
 
 
@@ -20,7 +20,7 @@ def get_events(request):
     users_device = IotDevice.objects.filter(owner=request.user.id)
     if not users_device:
         return redirect("no_device")
-    data = fetch_dashboard_stats(users_device.first().id)
+    data = fetch_dashboard_stats(users_device.first())
     return JsonResponse({"events": data["events_count_by_hour"]})
 
 

@@ -38,8 +38,8 @@
         <div class="col-sm-6 col-lg-3">
             <div class="card">
                 <div class="card-body">
-                    <h3 class="stat-card-title text-secondary">WATER USAGE</h3>
-                    <p class="stat-card-text">{{ water_usage }}L</p>
+                    <h3 class="stat-card-title text-secondary">STATUS</h3>
+                    <p class="stat-card-text">{% if is_up %}ONLINE{% else %}OFFLINE{% endif %}</p>
                 </div>
             </div>
         </div>
@@ -61,30 +61,16 @@
             <div class="card">
                 <div class="card-body">
                     <h3 class="status-card-title">SYSTEM OVERVIEW</h3>
-                    <div class="datagrid mt-4">
-                        <div class="datagrid-item">
-                            <div class="datagrid-title">Controller status</div>
-                            <div class="datagrid-content">ONLINE</div>
-                        </div>
-                        <div class="datagrid-item">
-                            <div class="datagrid-title">Heater status</div>
-                            <div class="datagrid-content">OFF</div>
-                        </div>
-                        <div class="datagrid-item">
-                            <div class="datagrid-title">Last ping</div>
-                            <div class="datagrid-content">3 minutes ago</div>
-                        </div>
-                        <div class="datagrid-item">
-                            <div class="datagrid-title">Water level</div>
-                            <div class="datagrid-content">263</div>
-                        </div>
-                        <div class="datagrid-item">
-                            <div class="datagrid-title">Controller temperature</div>
-                            <div class="datagrid-content">45°C</div>
-                        </div>
-                        <div class="datagrid-item">
-                            <div class="datagrid-title">Heater temperature</div>
-                            <div class="datagrid-content">32°C</div>
+                    <div class="row">
+                        <div class="datagrid mt-4">
+                            <div class="datagrid-item">
+                                <div class="datagrid-title">Controller status</div>
+                                <div class="datagrid-content {% if is_up %}text-green{% else %}text-red{% endif %}">{% if is_up %}ONLINE{% else %}OFFLINE{% endif %}</div>
+                            </div>
+                            <div class="datagrid-item">
+                                <div class="datagrid-title">Last ping</div>
+                                <div class="datagrid-content">{{ last_ping }}</div>
+                            </div>
                         </div>
                     </div>
                 </div>

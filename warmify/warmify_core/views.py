@@ -4,12 +4,12 @@ from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import csrf_exempt
 import json
 from datetime import datetime
-from .models import IotDevice, Event
+from .models import IotDevice, Event, Ping
 from .schedules import get_schedule
 
 
 @csrf_exempt
-def ping(request):
+def health(request):
     return JsonResponse({"message": "PONG"})
 
 
@@ -35,6 +35,36 @@ def log_event(request):
     except Exception as e:
         print(e)
         return JsonResponse({"message": "invalid payload"}, status=400)
+
+
+@csrf_exempt
+@require_http_methods(["POST"])
+def ping(request):
+    try:
+        data = json.loads(request.body)
+        if "token" not in data:
+            return JsonResponse({"message": "missing token"}, status=401)
+
+        token = data.get("token")
+        filtered_devices = IotDevice.objects.filter(token=token)
+        if len(filtered_devices) < 1:
+            return JsonResponse({"message": "invalid token"}, status=400)
+        device = filtered_devices[0]
+        ping_event = Ping(device=device)
+        if "device_temperature" in data:
+            ping_event.recorded_device_temperature = data.get("device_temperature")
+        if "controller_temperature" in data:
+            ping_event.recorded_controller_temperature = data.get(
+                "controller_temperature"
+            )
+        if "waterlevel" in data:
+            ping_event.recorded_waterlevel = data.get("waterlevel")
+        ping_event.save()
+
+        return JsonResponse({"message": "success"}, status=201)
+    except Exception as e:
+        print(e)
+        return JsonResponse({"message": "something went wrong.."}, status=500)
 
 
 @csrf_exempt
