@@ -9,6 +9,8 @@ def human_readable_timedelta(date):
         return f"{diff.days // 7} weeks ago"
     if diff.days >= 1:
         return f"{diff.days} days ago"
+    if diff.seconds >= 3600:
+        return f"{diff.seconds // 3600} hours ago"
     if diff.seconds >= 60:
         return f"{diff.seconds // 60} minutes ago"
     return "a few seconds ago"

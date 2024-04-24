@@ -22,7 +22,7 @@ class IotDevice(models.Model):
         return "{}'s device".format(self.owner.username)
 
     def get_events(self):
-        return Event.objects.filter(device=self.id).order_by("-timestamp")
+        return Event.objects.filter(device=self.id).order_by("timestamp")
 
     def is_active(self):
         ordered_pings = Ping.objects.filter(device=self.id).order_by("timestamp")
