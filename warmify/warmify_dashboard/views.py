@@ -38,6 +38,11 @@ def status(request):
 
 
 @login_required
+def notifications(request):
+    return render(request, "warmify_dashboard/notifications.html")
+
+
+@login_required
 def no_device(request):
     return render(request, "warmify_dashboard/no_device.html")
 

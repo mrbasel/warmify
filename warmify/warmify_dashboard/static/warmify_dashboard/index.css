@@ -2,6 +2,7 @@
     font-size: 0.8rem;
     font-weight: normal;
 }
+
 .stat-card-text {
     font-size: 2.5rem;
 }
@@ -19,6 +20,14 @@
     position: relative;
 }
 
+.warmify-notifications-dropdown {
+    min-width: 300px;
+}
+
+.warmify-read-notification {
+    #background-color: #e2e8f0;
+}
+
 @media (min-width: 768px) {
     .warmify-active::after {
         content: "";
@@ -30,4 +39,3 @@
         border-bottom-width: 2px;
     }
 }
-

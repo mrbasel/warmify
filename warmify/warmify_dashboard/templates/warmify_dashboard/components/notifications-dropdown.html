@@ -1,0 +1,52 @@
+<div class="nav-item dropdown d-none d-md-flex me-3">
+    <a href="#" class="nav-link px-0" data-bs-toggle="dropdown" tabindex="-1" aria-label="Show notifications"
+        aria-expanded="false">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
+            stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+            <path d="M10 5a2 2 0 1 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6"></path>
+            <path d="M9 17v1a3 3 0 0 0 6 0v-1"></path>
+        </svg>
+        {% if notifications %}<span class="badge bg-red"></span>{% endif %}
+    </a>
+    <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-end dropdown-menu-card warmify-notifications-dropdown">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Latest notifcations</h3>
+            </div>
+            {% if not notifications %}
+            <div class="d-flex justify-content-center align-items-center">
+                <p class="pt-2">No notifications.</p>
+            </div>
+            {% endif %}
+            <div class="list-group list-group-flush list-group-hoverable">
+                {% for notification in notifications%}
+                <div class="list-group-item">
+                    <div class="row align-items-center">
+                        <div class="col-auto">
+                            {% if notification.status == "info" %}
+                            <span class="status-dot status-blue d-block"></span>
+                            {% elif notification.status == "warning" %}
+                            <span class="status-dot status-orange d-block"></span>
+                            {% elif notification.status == "danger" %}
+                            <span class="status-dot status-red d-block"></span>
+                            {% else %}
+                            <span class="status-dot d-block"></span>
+                            {% endif %}
+                        </div>
+                        <div class="col text-truncate">
+                            <span class="text-body d-block">{{ notification.title }}</span>
+                            <div class="d-block text-secondary text-truncate mt-n1">{{ notification.body }}</div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% if notifications %}
+        <div class="text-center mt-2 p-1 border-top">
+            <button class="btn btn-link">Mark all as read</button>
+        </div>
+        {% endif %}
+        </div>
+    </div>
+</div>

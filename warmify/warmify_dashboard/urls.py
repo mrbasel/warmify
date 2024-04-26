@@ -10,6 +10,7 @@ urlpatterns = [
     path("events/", views.events, name="events"),
     path("status/", views.status, name="status"),
     path("settings/", views.settings, name="settings"),
+    path("notifications/", views.notifications, name="notifications"),
     path("setup_incomplete/", views.no_device, name="no_device"),
     path(
         "login/",

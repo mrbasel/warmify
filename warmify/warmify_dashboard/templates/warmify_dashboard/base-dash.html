@@ -25,6 +25,7 @@
                   <a href="{% url 'index' %}">Warmify</a>
               </h1>
               <div class="navbar-nav flex-row order-md-last">
+                {% include 'warmify_dashboard/components/notifications-dropdown.html' %}
                 <div class="nav-item dropdown">
                   <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
                     <span class="avatar">T</span>
@@ -76,12 +77,19 @@
                             <span class="nav-link-title">Status</span>
                         </a>
                     </li>
+                    {% url 'notifications' as url %}
+                    <li class="nav-item warmify-nav-item {% if request.path == url %}warmify-active{% endif %}">
+                      <a class="nav-link" href="{{ url }}" >
+                        <span class="nav-link-title">Notifications</span>
+                      </a>
+                    </li>
                       {% url 'settings' as url %}
                     <li class="nav-item warmify-nav-item {% if request.path == url %}warmify-active{% endif %}">
                       <a class="nav-link" href="{{ url }}" >
                         <span class="nav-link-title">Settings</span>
                       </a>
                     </li>
+                    
                   </ul>
                 </div>
               </div>
