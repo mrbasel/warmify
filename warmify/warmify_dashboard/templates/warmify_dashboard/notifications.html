@@ -1,15 +1,55 @@
 {% extends "warmify_dashboard/base-dash.html" %}
 
-{% block header %}All Notifications{% endblock %}
+{% block header %}Notifications{% endblock %}
 
 {% block main %}
 <div class="container-xl">
-    {% if all_notifications %}
+    {% if unread_notifications %}
     <div class="row row-cards" style="scroll-behavior: unset;">
         <div class="col-12" style="scroll-behavior: unset;">
             <div class="card" style="scroll-behavior: unset;">
+                <div class="card-header">
+                    <h3 class="card-title">Unread notifications</h3>
+                </div>
                 <div class="list-group list-group-flush list-group-hoverable" style="scroll-behavior: unset;">
-                    {% for notification in all_notifications %}
+                    {% for notification in unread_notifications %}
+                    <div class="list-group-item {% if not notification.is_read %}warmify-read-notification{% endif %}" style="scroll-behavior: unset;">
+                        <div class="row align-items-center" style="scroll-behavior: unset;">
+                            <div class="col-auto" style="scroll-behavior: unset;">
+                                {% if notification.status == "info" %}
+                                <span class="status-dot status-blue d-block status-dot-animated"></span>
+                                {% elif notification.status == "success" %}
+                                <span class="status-dot status-green d-block"></span>
+                                {% elif notification.status == "warning" %}
+                                <span class="status-dot status-orange d-block status-dot-animated"></span>
+                                {% elif notification.status == "danger" %}
+                                <span class="status-dot status-red d-block status-dot-animated"></span>
+                                {% else %}
+                                <span class="status-dot d-block status-dot-animated"></span>
+                                {% endif %}
+                            </div>
+                            <div class="col text-truncate" style="scroll-behavior: unset;">
+                                <a href="#" class="text-reset d-block" style="scroll-behavior: unset;">{{ notification.title }}</a>
+                                <div class="d-block text-secondary text-truncate mt-n1" style="scroll-behavior: unset;">
+                                    {{ notification.body }}</div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    {% if read_notifications %}
+    <div class="row row-cards mt-4" style="scroll-behavior: unset;">
+        <div class="col-12" style="scroll-behavior: unset;">
+            <div class="card" style="scroll-behavior: unset;">
+                <div class="card-header">
+                    <h3 class="card-title">Read notifications</h3>
+                </div>
+                <div class="list-group list-group-flush list-group-hoverable" style="scroll-behavior: unset;">
+                    {% for notification in read_notifications %}
                     <div class="list-group-item {% if not notification.is_read %}warmify-read-notification{% endif %}" style="scroll-behavior: unset;">
                         <div class="row align-items-center" style="scroll-behavior: unset;">
                             <div class="col-auto" style="scroll-behavior: unset;">
@@ -35,9 +75,10 @@
             </div>
         </div>
     </div>
-    {% else %}
+    {% endif %}
+    {% if not unread_notifications and not read_notifications %}
     <div>
-        <p>No notifications.</p>
+        <p>No notifications yet.</p>
     </div>
     {% endif %}
 </div>

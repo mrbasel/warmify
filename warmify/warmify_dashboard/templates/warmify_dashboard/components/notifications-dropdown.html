@@ -26,6 +26,8 @@
                         <div class="col-auto">
                             {% if notification.status == "info" %}
                             <span class="status-dot status-blue d-block"></span>
+                            {% elif notification.status == "success" %}
+                            <span class="status-dot status-green d-block"></span>
                             {% elif notification.status == "warning" %}
                             <span class="status-dot status-orange d-block"></span>
                             {% elif notification.status == "danger" %}
