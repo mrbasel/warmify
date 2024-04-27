@@ -1,7 +1,7 @@
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.decorators import login_required
-from warmify_core.models import Event, IotDevice
+from warmify_core.models import Event, IotDevice, Notification
 from warmify_dashboard.services import fetch_dashboard_stats
 from django.core.paginator import Paginator
 
@@ -11,7 +11,10 @@ def index(request):
     users_device = IotDevice.objects.filter(owner=request.user.id)
     if not users_device:
         return redirect("no_device")
-    context = fetch_dashboard_stats(users_device.first())
+    context = {
+        **fetch_dashboard_stats(users_device.first()),
+        "notifications": request.notifications,
+    }
     return render(request, "warmify_dashboard/index.html", context)
 
 
@@ -29,17 +32,35 @@ def get_events(request):
 
 @login_required
 def reports(request):
-    return render(request, "warmify_dashboard/reports.html")
+    context = {"notifications": request.notifications}
+    return render(request, "warmify_dashboard/reports.html", context=context)
 
 
 @login_required
 def status(request):
-    return render(request, "warmify_dashboard/status.html")
+    context = {"notifications": request.notifications}
+    return render(request, "warmify_dashboard/status.html", context=context)
 
 
 @login_required
 def notifications(request):
-    return render(request, "warmify_dashboard/notifications.html")
+    device = request.user.get_device()
+    all_notifications = Notification.objects.filter(device=device)
+    read_notifications = all_notifications.filter(is_read=True)
+    unread_notifications = all_notifications.filter(is_read=False)
+    context = {
+        "notifications": request.notifications,
+        "read_notifications": read_notifications,
+        "unread_notifications": unread_notifications,
+    }
+    return render(request, "warmify_dashboard/notifications.html", context=context)
+
+
+@login_required
+def mark_read(request):
+    next_page = request.POST.get("next", "/")
+    Notification.mark_notifications_as_read(request.user.get_device())
+    return redirect(next_page)
 
 
 @login_required
@@ -59,10 +80,15 @@ def events(request):
     page_obj = paginator.get_page(page_number)
     range = list(paginator.get_elided_page_range(page_number if page_number else 1))
 
-    context = {"page_obj": page_obj, "range": range}
+    context = {
+        "page_obj": page_obj,
+        "range": range,
+        "notifications": request.notifications,
+    }
     return render(request, "warmify_dashboard/events.html", context)
 
 
 @login_required
 def settings(request):
-    return render(request, "warmify_dashboard/settings.html")
+    context = {"notifications": request.notifications}
+    return render(request, "warmify_dashboard/settings.html", context=context)
