@@ -57,6 +57,13 @@ def notifications(request):
 
 
 @login_required
+def mark_read(request):
+    next_page = request.POST.get("next", "/")
+    Notification.mark_notifications_as_read(request.user.get_device())
+    return redirect(next_page)
+
+
+@login_required
 def no_device(request):
     return render(request, "warmify_dashboard/no_device.html")
 

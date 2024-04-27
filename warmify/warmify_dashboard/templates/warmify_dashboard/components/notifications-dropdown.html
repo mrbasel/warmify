@@ -48,7 +48,11 @@
             </div>
         {% if notifications %}
         <div class="text-center mt-2 p-1 border-top">
-            <button class="btn btn-link">Mark all as read</button>
+            <form class="d-inline" action="{% url 'read_notifications' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="next" value="{{ request.path }}">
+                <button class="btn btn-link">Mark all as read</button>
+            </form>
         </div>
         {% endif %}
         </div>
