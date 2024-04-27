@@ -9,6 +9,6 @@ class NotificationsMiddleware:
         if request.user.is_authenticated:
             device = request.user.get_device()
             if device:
-                request.notifications = Notification.get_unread(device.id)
+                request.notifications = Notification.get_unread(device.id)[:5]
         response = self.get_response(request)
         return response
