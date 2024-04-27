@@ -4,8 +4,8 @@ from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import csrf_exempt
 import json
 from datetime import datetime
-from .models import IotDevice, Event, Ping
-from .schedules import get_schedule
+from warmify_core.models import IotDevice, Event, Ping
+from warmify_core.schedules import get_schedule
 
 
 @csrf_exempt
