@@ -10,7 +10,10 @@ SIX_MINUTES_IN_SECONDS = 60 * 6
 
 class User(AbstractUser):
     def get_device(self):
-        return IotDevice.objects.get(owner=self.id)
+        try:
+            return IotDevice.objects.get(owner=self.id)
+        except IotDevice.DoesNotExist:
+            return None
 
 
 class IotDevice(models.Model):
@@ -108,3 +111,33 @@ class Ping(models.Model):
     @classmethod
     def get_last_ping(cls, device_id):
         return cls.objects.filter(device=device_id).order_by("-timestamp").first()
+
+
+NOTIFICATION_STATUS_CHOICES = {
+    "success": "SUCCESS",
+    "info": "INFO",
+    "warning": "WARNING",
+    "danger": "DANGER",
+}
+
+
+class Notification(models.Model):
+    title = models.TextField()
+    body = models.TextField()
+    device = models.ForeignKey(IotDevice, on_delete=models.CASCADE)
+    is_read = models.BooleanField(default=False)
+    timestamp = models.DateTimeField(auto_now_add=True)
+    status = models.CharField(
+        default="info", choices=NOTIFICATION_STATUS_CHOICES, max_length=20
+    )
+
+    def __str__(self):
+        return self.title[:15]
+
+    @classmethod
+    def get_unread(cls, device_id):
+        return cls.objects.filter(device=device_id).filter(is_read=False)
+
+    def mark_as_read(self):
+        self.is_read = True
+        self.save()
