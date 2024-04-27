@@ -22,25 +22,27 @@
             <div class="list-group list-group-flush list-group-hoverable">
                 {% for notification in notifications%}
                 <div class="list-group-item">
-                    <div class="row align-items-center">
-                        <div class="col-auto">
-                            {% if notification.status == "info" %}
-                            <span class="status-dot status-blue d-block"></span>
-                            {% elif notification.status == "success" %}
-                            <span class="status-dot status-green d-block"></span>
-                            {% elif notification.status == "warning" %}
-                            <span class="status-dot status-orange d-block"></span>
-                            {% elif notification.status == "danger" %}
-                            <span class="status-dot status-red d-block"></span>
-                            {% else %}
-                            <span class="status-dot d-block"></span>
-                            {% endif %}
+                    <a href="{% url 'notifications' %}">
+                        <div class="row align-items-center">
+                            <div class="col-auto">
+                                {% if notification.status == "info" %}
+                                <span class="status-dot status-blue d-block"></span>
+                                {% elif notification.status == "success" %}
+                                <span class="status-dot status-green d-block"></span>
+                                {% elif notification.status == "warning" %}
+                                <span class="status-dot status-orange d-block"></span>
+                                {% elif notification.status == "danger" %}
+                                <span class="status-dot status-red d-block"></span>
+                                {% else %}
+                                <span class="status-dot d-block"></span>
+                                {% endif %}
+                            </div>
+                            <div class="col text-truncate">
+                                <span class="text-body d-block">{{ notification.title }}</span>
+                                <div class="d-block text-secondary text-truncate mt-n1">{{ notification.body }}</div>
+                            </div>
                         </div>
-                        <div class="col text-truncate">
-                            <span class="text-body d-block">{{ notification.title }}</span>
-                            <div class="d-block text-secondary text-truncate mt-n1">{{ notification.body }}</div>
-                        </div>
-                    </div>
+                    </a>
                 </div>
                 {% endfor %}
             </div>
