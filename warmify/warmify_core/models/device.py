@@ -22,7 +22,7 @@ class IotDevice(models.Model):
     def is_active(self):
         from .ping import Ping
 
-        ordered_pings = Ping.objects.filter(device=self.id).order_by("timestamp")
+        ordered_pings = Ping.objects.filter(device=self.id).order_by("id")
         if not ordered_pings:
             return False
         last_ping = ordered_pings.last()

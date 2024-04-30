@@ -1,9 +1,10 @@
 from django.db import models
 from .device import IotDevice
+from datetime import datetime
 
 
 class Ping(models.Model):
-    timestamp = models.DateTimeField(auto_now_add=True)
+    timestamp = models.DateTimeField(default=datetime.now)
     recorded_device_temperature = models.IntegerField(null=True)
     recorded_controller_temperature = models.IntegerField(null=True)
     recorded_waterlevel = models.IntegerField(null=True)
