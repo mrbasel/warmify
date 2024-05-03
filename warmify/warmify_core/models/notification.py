@@ -1,4 +1,4 @@
-from django.db import models
+from django.db import models, transaction
 from .device import IotDevice
 
 NOTIFICATION_STATUS_CHOICES = {

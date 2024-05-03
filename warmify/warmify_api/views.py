@@ -52,14 +52,17 @@ def ping(request):
             return JsonResponse({"message": "invalid token"}, status=400)
         device = filtered_devices[0]
         ping_event = Ping(device=device)
-        if "device_temperature" in data:
-            ping_event.recorded_device_temperature = data.get("device_temperature")
         if "controller_temperature" in data:
             ping_event.recorded_controller_temperature = data.get(
                 "controller_temperature"
             )
         if "waterlevel" in data:
             ping_event.recorded_waterlevel = data.get("waterlevel")
+
+        if "recorded_heater_temperature" in data:
+            ping_event.recorded_heater_temperature = data.get(
+                "recorded_heater_temperature"
+            )
 
         if "is_on_heater" in data:
             ping_event.is_on_heater = data.get("is_on_heater")

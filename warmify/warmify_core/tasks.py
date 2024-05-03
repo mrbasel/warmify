@@ -1,5 +1,5 @@
 from celery import shared_task
-from warmify_core.models import Ping, Notification
+from warmify_core.models import Ping, Notification, IotDevice
 
 
 @shared_task
@@ -20,15 +20,13 @@ def check_heater_is_working(device_id):
     if not target_ping:
         return
 
-    print("last_ping:", last_ping)
-    print("target_ping:", target_ping)
     temperature_difference = (
         last_ping.recorded_heater_temperature - target_ping.recorded_heater_temperature
     )
-
-    if temperature_difference < 5:
+    if temperature_difference > 5:
+        device = IotDevice.objects.get(id=device_id)
         Notification.objects.create(
-            device=device_id,
+            device=device,
             title="Heater alert!",
             body="Your heater is not functioning properly.",
             status="danger",
