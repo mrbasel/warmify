@@ -4,29 +4,48 @@ from django.contrib.auth.decorators import login_required
 from warmify_core.models import Event, IotDevice, Notification
 from warmify_dashboard.services import fetch_dashboard_stats
 from django.core.paginator import Paginator
+from datetime import datetime, timedelta
+from warmify_dashboard.utils import get_current_date, get_date_start
 
 
 @login_required
 def index(request):
+    day_range = request.GET.get("range", "1")
     users_device = IotDevice.objects.filter(owner=request.user.id)
     if not users_device:
         return redirect("no_device")
     context = {
-        **fetch_dashboard_stats(users_device.first()),
+        **fetch_dashboard_stats(users_device.first(), int(day_range)),
         "notifications": request.notifications,
+        "day_range": day_range,
     }
     return render(request, "warmify_dashboard/index.html", context)
 
 
 @login_required
 def get_events(request):
+    day_range = int(request.GET.get("range", "1"))
     users_device = IotDevice.objects.filter(owner=request.user.id)
     if not users_device:
         return redirect("no_device")
     device = users_device.first()
-    events_count_by_hour = Event.get_events_count_by_hour(
-        Event.get_todays_events(device.id)
-    )
+
+    current_date = get_current_date()
+    events = None
+    if day_range == 7:
+        target_date = current_date - timedelta(days=7)
+        events = Event.objects.filter(device=device).filter(
+            timestamp__gte=get_date_start(target_date)
+        )
+    elif day_range == 30:
+        target_date = current_date - timedelta(days=30)
+        events = Event.objects.filter(device=device).filter(
+            timestamp__gte=get_date_start(target_date)
+        )
+    else:
+        events = Event.get_todays_events(device.id)
+
+    events_count_by_hour = Event.get_events_count_by_hour(events)
     return JsonResponse({"events": events_count_by_hour})
 
 

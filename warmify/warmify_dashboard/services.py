@@ -2,16 +2,31 @@ from warmify_core.models import Event, Ping
 from warmify_core.schedules import get_schedule
 from warmify_dashboard.utils import human_readable_timedelta
 from math import floor
+from warmify_dashboard.utils import get_current_date, get_date_start, get_date_end
+from datetime import timedelta
 
 
-def fetch_dashboard_stats(device):
+def fetch_dashboard_stats(device, day_range=1):
     device_id = device.id
-    todays_events = Event.get_todays_events(device_id)
+    events = None
+    current_date = get_current_date()
+    if day_range == 7:
+        target_date = current_date - timedelta(days=7)
+        events = Event.objects.filter(device=device).filter(
+            timestamp__gte=get_date_start(target_date)
+        )
+    elif day_range == 30:
+        target_date = current_date - timedelta(days=30)
+        events = Event.objects.filter(device=device).filter(
+            timestamp__gte=get_date_start(target_date)
+        )
+    else:
+        events = Event.get_todays_events(device_id)
 
     schedule = get_schedule(device_id)
-    saving_percentage = floor(schedule.count(0) / 24 * 100)
+    saving_percentage = floor(schedule.count(0) / (day_range * 24 * 100))
 
-    events_count_by_hour = Event.get_events_count_by_hour(todays_events)
+    events_count_by_hour = Event.get_events_count_by_hour(events)
     if sum(events_count_by_hour) == 0:
         most_active_time_string = "-"
     else:
@@ -26,7 +41,7 @@ def fetch_dashboard_stats(device):
         last_ping_timedelta = "-"
 
     data = {
-        "events_count": todays_events.count(),
+        "events_count": events.count(),
         "saving_percentage": saving_percentage,
         "active_time": most_active_time_string,
         "water_usage": 30,

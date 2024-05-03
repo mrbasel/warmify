@@ -7,7 +7,9 @@ function labelFormatter(timeLabel) {
 }
 
 document.addEventListener("DOMContentLoaded", async function() {
-    const data = await fetch(`${URL}/get_events/`).then((res) => res.json()).then((data) => data)
+    const urlParams = new URLSearchParams(window.location.search);
+    const range = urlParams.get("range")
+    const data = await fetch(`${URL}/get_events?range=${range ?? 1}`).then((res) => res.json()).then((data) => data)
     const events = data.events
     console.log({events});
 
