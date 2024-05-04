@@ -6,6 +6,7 @@ import json
 from datetime import datetime
 from warmify_core.models import IotDevice, Event, Ping
 from warmify_core.schedules import get_schedule
+from warmify_core.tasks import check_heater_is_working, alert_empty_tank
 
 
 @csrf_exempt
@@ -51,14 +52,28 @@ def ping(request):
             return JsonResponse({"message": "invalid token"}, status=400)
         device = filtered_devices[0]
         ping_event = Ping(device=device)
-        if "device_temperature" in data:
-            ping_event.recorded_device_temperature = data.get("device_temperature")
         if "controller_temperature" in data:
             ping_event.recorded_controller_temperature = data.get(
                 "controller_temperature"
             )
         if "waterlevel" in data:
             ping_event.recorded_waterlevel = data.get("waterlevel")
+            if ping_event.recorded_waterlevel == 0:
+                alert_empty_tank.apply_async((device.id,))
+
+        if "recorded_heater_temperature" in data:
+            ping_event.recorded_heater_temperature = data.get(
+                "recorded_heater_temperature"
+            )
+
+        if "is_on_heater" in data:
+            ping_event.is_on_heater = data.get("is_on_heater")
+
+        last_ping = Ping.get_last_ping(device.id)
+        # Check if the heater turned on now
+        if last_ping.is_on_heater == False and ping_event.is_on_heater == True:
+            check_heater_is_working.apply_async((device.id,), countdown=30)
+
         ping_event.save()
 
         return JsonResponse({"message": "success"}, status=201)

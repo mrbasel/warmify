@@ -5,9 +5,10 @@ from datetime import datetime
 
 class Ping(models.Model):
     timestamp = models.DateTimeField(default=datetime.now)
-    recorded_device_temperature = models.IntegerField(null=True)
+    recorded_heater_temperature = models.IntegerField(null=True)
     recorded_controller_temperature = models.IntegerField(null=True)
     recorded_waterlevel = models.IntegerField(null=True)
+    is_on_heater = models.BooleanField(null=True)
     device = models.ForeignKey(IotDevice, on_delete=models.CASCADE)
 
     @classmethod
