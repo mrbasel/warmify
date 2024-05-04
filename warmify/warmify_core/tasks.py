@@ -1,5 +1,6 @@
 from celery import shared_task
 from warmify_core.models import Ping, Notification, IotDevice
+from datetime import datetime, timezone, time
 
 
 @shared_task
@@ -30,4 +31,24 @@ def check_heater_is_working(device_id):
             title="Heater alert!",
             body="Your heater is not functioning properly.",
             status="danger",
+            notification_type="heater_not_working",
+        )
+
+
+@shared_task
+def alert_empty_tank(device_id):
+    current_date = datetime.combine(datetime.now(timezone.utc), time.min)
+    todays_empty_tank_alerts = (
+        Notification.objects.filter(device=device_id)
+        .filter(timestamp__gte=current_date)
+        .filter(notification_type="empty_tank")
+    )
+    if not todays_empty_tank_alerts:
+        device = IotDevice.objects.get(id=device_id)
+        Notification.objects.create(
+            device=device,
+            title="Tank alert!",
+            body="Your water tank does not have enough water.",
+            status="danger",
+            notification_type="empty_tank",
         )

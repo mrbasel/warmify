@@ -8,6 +8,12 @@ NOTIFICATION_STATUS_CHOICES = {
     "danger": "DANGER",
 }
 
+NOTIFICATION_TYPE_CHOICES = {
+    "heater_not_working": "Heater is not working",
+    "empty_tank": "water tank is empty",
+    "custom": "Custom notification",
+}
+
 
 class Notification(models.Model):
     title = models.TextField()
@@ -15,6 +21,9 @@ class Notification(models.Model):
     device = models.ForeignKey(IotDevice, on_delete=models.CASCADE)
     is_read = models.BooleanField(default=False)
     timestamp = models.DateTimeField(auto_now_add=True)
+    notification_type = models.CharField(
+        default="custom", choices=NOTIFICATION_TYPE_CHOICES, max_length=40
+    )
     status = models.CharField(
         default="info", choices=NOTIFICATION_STATUS_CHOICES, max_length=20
     )

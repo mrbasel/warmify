@@ -6,7 +6,7 @@ import json
 from datetime import datetime
 from warmify_core.models import IotDevice, Event, Ping
 from warmify_core.schedules import get_schedule
-from warmify_core.tasks import check_heater_is_working
+from warmify_core.tasks import check_heater_is_working, alert_empty_tank
 
 
 @csrf_exempt
@@ -58,6 +58,8 @@ def ping(request):
             )
         if "waterlevel" in data:
             ping_event.recorded_waterlevel = data.get("waterlevel")
+            if ping_event.recorded_waterlevel == 0:
+                alert_empty_tank.apply_async((device.id,))
 
         if "recorded_heater_temperature" in data:
             ping_event.recorded_heater_temperature = data.get(
