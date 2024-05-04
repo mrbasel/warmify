@@ -1,8 +1,12 @@
 from warmify_core.models import Event, Ping
 from warmify_core.schedules import get_schedule
-from warmify_dashboard.utils import human_readable_timedelta
 from math import floor
-from warmify_dashboard.utils import get_current_date, get_date_start, get_date_end
+from warmify_core.utils import (
+    get_current_date,
+    get_date_start,
+    get_date_end,
+    human_readable_timedelta,
+)
 from datetime import timedelta
 
 

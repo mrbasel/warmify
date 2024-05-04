@@ -5,7 +5,7 @@ from warmify_core.models import Event, IotDevice, Notification
 from warmify_dashboard.services import fetch_dashboard_stats
 from django.core.paginator import Paginator
 from datetime import datetime, timedelta
-from warmify_dashboard.utils import get_current_date, get_date_start
+from warmify_core.utils import get_current_date, get_date_start
 
 
 @login_required
