@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta, time
+from datetime import datetime, timedelta, time, timezone
 from .models import Event
 
 
@@ -39,3 +39,17 @@ def get_schedule(device_id):
         return generate_schedule(yesterday_events)
 
     return generate_schedule([])
+
+
+# Needs refactoring..
+def schedule_to_string(schedule):
+    current_date = datetime.now(timezone.utc)
+    to_string = lambda i: f"{'0' if i < 10 else ''}{i}:00-{i}:59"
+    return [
+        {
+            "string": to_string(i),
+            "is_active": schedule[i],
+            "is_now": current_date.hour + 3 == i,
+        }
+        for i in range(24)
+    ]

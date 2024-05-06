@@ -6,6 +6,7 @@ from warmify_dashboard.services import fetch_dashboard_stats
 from django.core.paginator import Paginator
 from datetime import datetime, timedelta
 from warmify_core.utils import get_current_date, get_date_start
+from warmify_core.schedules import get_schedule, schedule_to_string
 
 
 @login_required
@@ -14,9 +15,12 @@ def index(request):
     users_device = IotDevice.objects.filter(owner=request.user.id)
     if not users_device:
         return redirect("no_device")
+    device = users_device.first()
+    schedule = get_schedule(device.id)
     context = {
-        **fetch_dashboard_stats(users_device.first(), int(day_range)),
+        **fetch_dashboard_stats(device, int(day_range)),
         "notifications": request.notifications,
+        "schedule": schedule_to_string(schedule),
         "day_range": day_range,
     }
     return render(request, "warmify_dashboard/index.html", context)

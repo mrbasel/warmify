@@ -50,8 +50,8 @@
         <div class="col-sm-6 col-lg-3">
             <div class="card">
                 <div class="card-body">
-                    <h3 class="stat-card-title text-secondary">STATUS</h3>
-                    <p class="stat-card-text">{% if is_up %}ONLINE{% else %}OFFLINE{% endif %}</p>
+                    <h3 class="stat-card-title text-secondary">WATER USAGE</h3>
+                    <p class="stat-card-text">-</p>
                 </div>
             </div>
         </div>
@@ -70,7 +70,36 @@
     </div>
 </div>
 <div class="container-xl mt-3">
-    <div class="row row-deck row-cards">
+    <div class="row">
+        <div class="col-6">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="status-card-title">TODAYS SCHEDULE</h3>
+                    <div class="list-group list-group-flush" style="scroll-behavior: unset;">
+                        {% for hour in schedule %}
+                        <div class="list-group-item" style="scroll-behavior: unset;">
+                            <div class="row align-items-center justify-content-between" style="scroll-behavior: unset;">
+                                <div class="col-auto" style="scroll-behavior: unset;">
+                                    {% if hour.is_now %}
+                                    <strong>{{ hour.string }}</strong>
+                                    {% else %}
+                                    <span>{{ hour.string }}</span>
+                                    {% endif %}
+                                </div>
+                                <div class="col-auto" style="scroll-behavior: unset;">
+                                    {% if hour.is_now %}
+                                    <strong>{% if hour.is_active == 1 %}ON{% else %}OFF{% endif %}</strong>
+                                    {% else %}
+                                    <span>{% if hour.is_active == 1 %}ON{% else %}OFF{% endif %}</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="col-6">
             <div class="card">
                 <div class="card-body">
@@ -91,4 +120,5 @@
             </div>
         </div>
     </div>
-    {% endblock %}
+</div>
+{% endblock %}
