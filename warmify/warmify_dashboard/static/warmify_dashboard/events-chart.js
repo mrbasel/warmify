@@ -6,83 +6,90 @@ function labelFormatter(timeLabel) {
     else return `${timeLabel}:00`
 }
 
-document.addEventListener("DOMContentLoaded", async function() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const range = urlParams.get("range")
-    const data = await fetch(`${URL}/get_events?range=${range ?? 1}`).then((res) => res.json()).then((data) => data)
-    const events = data.events
-    console.log({events});
+class EventsChart extends HTMLElement {
+    constructor() {
+        super()
+    }
 
-    window.ApexCharts && (new ApexCharts(document.getElementById("events-chart"), {
-        chart: {
-            type: "bar",
-            fontFamily: 'inherit',
-            height: 240,
-            parentHeightOffset: 0,
-            toolbar: {
-                show: false,
+    async connectedCallback() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const range = urlParams.get("range")
+        const data = await fetch(`${URL}/get_events?range=${range ?? 1}`).then((res) => res.json()).then((data) => data)
+        self.events = data.events
+
+        window.ApexCharts && (new ApexCharts(this.parentNode, {
+            chart: {
+                type: "bar",
+                fontFamily: 'inherit',
+                height: 240,
+                parentHeightOffset: 0,
+                toolbar: {
+                    show: false,
+                },
+                animations: {
+                    enabled: false
+                },
+                stacked: true,
             },
-            animations: {
-                enabled: false
+            plotOptions: {
+                bar: {
+                    barHeight: '50%',
+                }
             },
-            stacked: true,
-        },
-        plotOptions: {
-            bar: {
-                barHeight: '50%',
-            }
-        },
-        dataLabels: {
-            enabled: false,
-        },
-        fill: {
-            opacity: 1,
-        },
-        series: [{
-            name: "Events",
-            data: events
-        }],
-        grid: {
-            padding: {
-                top: -20,
-                right: 0,
-                left: -4,
-                bottom: -4
+            dataLabels: {
+                enabled: false,
             },
-            strokeDashArray: 4,
-        },
-        xaxis: {
-            labels: {
-                padding: 0,
-                formatter: labelFormatter,
+            fill: {
+                opacity: 1,
             },
-            tooltip: {
-                enabled: false
+            series: [{
+                name: "Events",
+                data: events
+            }],
+            grid: {
+                padding: {
+                    top: -20,
+                    right: 0,
+                    left: -4,
+                    bottom: -4
+                },
+                strokeDashArray: 4,
             },
-            axisBorder: {
-                show: false,
+            xaxis: {
+                labels: {
+                    padding: 0,
+                    formatter: labelFormatter,
+                },
+                tooltip: {
+                    enabled: false
+                },
+                axisBorder: {
+                    show: false,
+                },
+                categories: times,
             },
-            categories: times,
-        },
-        yaxis: {
-            labels: {
-                padding: 4
+            yaxis: {
+                labels: {
+                    padding: 4
+                },
             },
-        },
-        // colors: [tabler.getColor("purple"), tabler.getColor("green"), tabler.getColor("yellow"), tabler.getColor("red"), tabler.getColor("primary")],
-        legend: {
-            show: true,
-            position: 'bottom',
-            offsetY: 12,
-            markers: {
-                width: 10,
-                height: 10,
-                radius: 100,
+            // colors: [tabler.getColor("purple"), tabler.getColor("green"), tabler.getColor("yellow"), tabler.getColor("red"), tabler.getColor("primary")],
+            legend: {
+                show: true,
+                position: 'bottom',
+                offsetY: 12,
+                markers: {
+                    width: 10,
+                    height: 10,
+                    radius: 100,
+                },
+                itemMargin: {
+                    horizontal: 8,
+                    vertical: 8
+                },
             },
-            itemMargin: {
-                horizontal: 8,
-                vertical: 8
-            },
-        },
-    })).render();
-});
+        })).render();
+    }
+}
+
+customElements.define("events-chart", EventsChart);

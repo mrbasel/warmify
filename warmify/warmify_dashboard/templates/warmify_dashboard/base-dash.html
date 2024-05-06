@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <script src="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta17/dist/js/tabler.min.js"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.12"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta17/dist/css/tabler.min.css">
     {% load static %}
     <link rel="stylesheet" href="{% static 'warmify_dashboard/index.css' %}">
@@ -51,7 +52,7 @@
           <header class="navbar-expand-md warmify-nav-styles">
             <div class="collapse navbar-collapse" id="navbar-menu">
               <div class="navbar">
-                <div class="container-xl">
+                <div hx-boost="true" class="container-xl">
                   <ul class="navbar-nav">
                       {% url 'index' as url %}
                       <li class="nav-item warmify-nav-item {% if request.path == url %}warmify-active{% endif %}">

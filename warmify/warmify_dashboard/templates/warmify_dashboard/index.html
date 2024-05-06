@@ -10,8 +10,8 @@
 {% block header%}
 <div class="d-flex justify-content-between">
     <h2 class="page-title">Dashboard</h2>
-    <form method="GET">
-        <select name="range" class="form-select" onchange="this.form.submit()">
+    <form method="GET" hx-get="{% url 'index' %}" hx-trigger="change" hx-target="body" hw-swap="outerHTML" hx-push-url="true">
+        <select name="range" class="form-select">
             <option {% if day_range == "1" %}selected{% endif %} value="1">Today</option>
             <option {% if day_range == "7" %}selected{% endif %} value="7">Last 7 days</option>
             <option {% if day_range == "30" %}selected{% endif %} value="30">Last 30 days</option>
@@ -62,7 +62,9 @@
         <div class="card">
             <div class="card-body">
                 <h3 class="status-card-title">EVENTS</h3>
-                <div id="events-chart" class="chart-lg mt-2"></div>
+                <div id="events-chart" class="chart-lg mt-2">
+                    <events-chart></events-chart>
+                </div>
             </div>
         </div>
     </div>

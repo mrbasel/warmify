@@ -1,4 +1,4 @@
-<div class="nav-item dropdown d-none d-md-flex me-3">
+<div id="notifications-dropdown" class="nav-item dropdown d-none d-md-flex me-3">
     <a href="#" class="nav-link px-0" data-bs-toggle="dropdown" tabindex="-1" aria-label="Show notifications"
         aria-expanded="false">
         <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
@@ -48,10 +48,10 @@
             </div>
         {% if notifications %}
         <div class="text-center mt-2 p-1 border-top">
-            <form class="d-inline" action="{% url 'read_notifications' %}" method="post">
+            <form class="d-inline" action="{% url 'read_notifications' %}" method="post" hx-post="{% url 'read_notifications' %}" hx-trigger="click" hx-target="#notifications-dropdown" hx-swap="outerHTML">
                 {% csrf_token %}
                 <input type="hidden" name="next" value="{{ request.path }}">
-                <button class="btn btn-link">Mark all as read</button>
+                <button type="submit" class="btn btn-link">Mark all as read</button>
             </form>
         </div>
         {% endif %}
