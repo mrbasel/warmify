@@ -1,18 +1,18 @@
 from django.db import models, transaction
 from .device import IotDevice
 
-NOTIFICATION_STATUS_CHOICES = {
-    "success": "SUCCESS",
-    "info": "INFO",
-    "warning": "WARNING",
-    "danger": "DANGER",
-}
+NOTIFICATION_STATUS_CHOICES = [
+    ("success", "SUCCESS"),
+    ("info", "INFO"),
+    ("warning", "WARNING"),
+    ("danger", "DANGER"),
+]
 
-NOTIFICATION_TYPE_CHOICES = {
-    "heater_not_working": "Heater is not working",
-    "empty_tank": "water tank is empty",
-    "custom": "Custom notification",
-}
+NOTIFICATION_TYPE_CHOICES = [
+    ("heater_not_working", "Heater is not working"),
+    ("empty_tank", "water tank is empty"),
+    ("custom", "Custom notification"),
+]
 
 
 class Notification(models.Model):
