@@ -34,7 +34,7 @@ SECRET_KEY = os.environ.get(
 DEBUG = os.environ.get("DJANGO_DEBUG", "") != "False"
 
 ALLOWED_HOSTS = (
-    list(os.environ.get("DJANGO_ALLOWED_HOSTS"))
+    os.environ.get("DJANGO_ALLOWED_HOSTS").split(",")
     if os.environ.get("DJANGO_ALLOWED_HOSTS")
     else []
 )
