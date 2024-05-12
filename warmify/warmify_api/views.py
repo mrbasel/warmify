@@ -19,18 +19,21 @@ def health(request):
 def log_event(request):
     try:
         data = json.loads(request.body)
+        print(data)
 
-        if "token" not in data or "timestamp" not in data:
+        if "token" not in data:
             return JsonResponse({"message": "missing data"}, status=400)
 
         token = data.get("token")
-        timestamp = data.get("timestamp")
         device = IotDevice.objects.filter(token=token).first()
 
         if not device:
             return JsonResponse({"message": "invalid token"}, status=400)
-        e = Event(timestamp=timestamp, device=device)
+        e = Event(device=device)
+        if "usage" in data:
+            e.usage_milliliters = data.get("usage")
         e.save()
+
         return JsonResponse({"message": "success"}, status=201)
 
     except Exception as e:
@@ -96,4 +99,4 @@ def get_heater_status(request):
     if schedule[current_datetime.hour]:
         should_turn_on_heater = True
 
-    return JsonResponse({"status": should_turn_on_heater})
+    return HttpResponse(1 if should_turn_on_heater else 0)
