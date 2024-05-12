@@ -44,7 +44,8 @@ class Event(models.Model):
 
         total_usage = 0
         for i in filtered_query:
-            total_usage += i.usage_milliliters
+            if i.usage_milliliters:
+                total_usage += i.usage_milliliters
         return total_usage / 1000
 
     @classmethod

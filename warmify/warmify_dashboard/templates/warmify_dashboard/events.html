@@ -24,7 +24,7 @@
                     <tr>
                         <td><span class="text-secondary">{{ event.id }}</span></td>
                         <td>{{ event.readable_date }}</td>
-                        <td>{{ event.readable_time }}</td>
+                        <td>{{ event.timestamp|date:'f A' }}</td>
                         <td>-</td>
                         <td>-</td>
                     </tr>

@@ -8,6 +8,7 @@ from warmify_core.utils import (
     human_readable_timedelta,
 )
 from datetime import timedelta
+from django.utils.timezone import localtime
 
 
 def fetch_dashboard_stats(device, day_range=1):
@@ -27,6 +28,8 @@ def fetch_dashboard_stats(device, day_range=1):
     else:
         events = Event.get_todays_events(device_id)
 
+    for e in events:
+        e.timestamp = localtime(e.timestamp)
     schedule = get_schedule(device_id)
     saving_percentage = floor(schedule.count(0) / (day_range * 24 * 100))
 

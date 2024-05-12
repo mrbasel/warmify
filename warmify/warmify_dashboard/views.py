@@ -7,6 +7,7 @@ from django.core.paginator import Paginator
 from datetime import datetime, timedelta
 from warmify_core.utils import get_current_date, get_date_start
 from warmify_core.schedules import get_schedule, schedule_to_string
+from django.utils.timezone import localtime
 
 
 @login_required
@@ -49,6 +50,8 @@ def get_events(request):
     else:
         events = Event.get_todays_events(device.id)
 
+    for e in events:
+        e.timestamp = localtime(e.timestamp)
     events_count_by_hour = Event.get_events_count_by_hour(events)
     return JsonResponse({"events": events_count_by_hour})
 
