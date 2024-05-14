@@ -5,7 +5,8 @@ from . import views
 
 urlpatterns = [
     path("", views.index, name="index"),
-    path("get_events/", views.get_events, name="get_events"),
+    path("get_events_range/", views.get_events_range, name="get_events"),
+    path("get_events_date/", views.get_events_date, name="get_events_date"),
     path("reports/", views.reports, name="reports"),
     path("events/", views.events, name="events"),
     path("status/", views.status, name="status"),
