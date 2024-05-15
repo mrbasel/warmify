@@ -31,7 +31,7 @@ def fetch_dashboard_stats(device, day_range=1):
     for e in events:
         e.timestamp = localtime(e.timestamp)
     schedule = get_schedule(device_id)
-    saving_percentage = floor(schedule.count(0) / (day_range * 24 * 100))
+    saving_percentage = floor(schedule.count(0) / 24 * 100)
 
     events_count_by_hour = Event.get_events_count_by_hour(events)
     if sum(events_count_by_hour) == 0:
