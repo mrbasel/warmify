@@ -13,8 +13,13 @@ class EventsChart extends HTMLElement {
 
     async connectedCallback() {
         const urlParams = new URLSearchParams(window.location.search);
-        const range = urlParams.get("range")
-        const data = await fetch(`${URL}/get_events?range=${range ?? 1}`).then((res) => res.json()).then((data) => data)
+        const range = urlParams.get("range");
+        const date = urlParams.get("date");
+        let data = [];
+        const filter_type = this.getAttribute("filter_type")
+        if (filter_type === "range") data = await fetch(`${URL}/get_events_range?range=${range ?? 1}`).then((res) => res.json()).then((data) => data)
+        else if (filter_type === "date") data = await fetch(`${URL}/get_events_date?date=${date ?? ""}`).then((res) => res.json()).then((data) => data)
+        else return
         self.events = data.events
 
         window.ApexCharts && (new ApexCharts(this.parentNode, {
@@ -93,3 +98,4 @@ class EventsChart extends HTMLElement {
 }
 
 customElements.define("events-chart", EventsChart);
+

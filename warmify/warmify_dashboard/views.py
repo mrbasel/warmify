@@ -28,7 +28,21 @@ def index(request):
 
 
 @login_required
-def get_events(request):
+def events(request):
+    date = request.GET.get("date", "")
+    users_device = IotDevice.objects.filter(owner=request.user.id)
+    if not users_device:
+        return redirect("no_device")
+
+    context = {
+        "date": date if date else datetime.now().strftime("%Y-%m-%d"),
+        "notifications": request.notifications,
+    }
+    return render(request, "warmify_dashboard/events.html", context)
+
+
+@login_required
+def get_events_range(request):
     day_range = int(request.GET.get("range", "1"))
     users_device = IotDevice.objects.filter(owner=request.user.id)
     if not users_device:
@@ -50,6 +64,30 @@ def get_events(request):
     else:
         events = Event.get_todays_events(device.id)
 
+    for e in events:
+        e.timestamp = localtime(e.timestamp)
+    events_count_by_hour = Event.get_events_count_by_hour(events)
+    return JsonResponse({"events": events_count_by_hour})
+
+
+@login_required
+def get_events_date(request):
+    current_date = get_current_date()
+    date_str = request.GET.get("date", current_date.strftime("%Y-%m-%d"))
+    users_device = IotDevice.objects.filter(owner=request.user.id)
+    if not users_device:
+        return redirect("no_device")
+    device = users_device.first()
+
+    target_date = (
+        datetime.strptime(date_str, "%Y-%m-%d") if date_str else get_current_date()
+    )
+    events = Event.objects.filter(
+        device=device,
+        timestamp__year=target_date.year,
+        timestamp__month=target_date.month,
+        timestamp__day=target_date.day,
+    )
     for e in events:
         e.timestamp = localtime(e.timestamp)
     events_count_by_hour = Event.get_events_count_by_hour(events)
@@ -99,26 +137,6 @@ def mark_read(request):
 @login_required
 def no_device(request):
     return render(request, "warmify_dashboard/no_device.html")
-
-
-@login_required
-def events(request):
-    users_device = IotDevice.objects.filter(owner=request.user.id)
-    if not users_device:
-        return redirect("no_device")
-    all_events = users_device.first().get_events()
-
-    paginator = Paginator(all_events, 20)
-    page_number = request.GET.get("page")
-    page_obj = paginator.get_page(page_number)
-    range = list(paginator.get_elided_page_range(page_number if page_number else 1))
-
-    context = {
-        "page_obj": page_obj,
-        "range": range,
-        "notifications": request.notifications,
-    }
-    return render(request, "warmify_dashboard/events.html", context)
 
 
 @login_required
