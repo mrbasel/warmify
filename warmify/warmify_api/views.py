@@ -58,8 +58,8 @@ def ping(request):
             ping_event.recorded_controller_temperature = data.get(
                 "controller_temperature"
             )
-        if "waterlevel" in data:
-            ping_event.recorded_waterlevel = data.get("waterlevel")
+        if "recorded_waterlevel" in data:
+            ping_event.recorded_waterlevel = data.get("recorded_waterlevel")
             if ping_event.recorded_waterlevel == 0:
                 alert_empty_tank.apply_async((device.id,))
 
