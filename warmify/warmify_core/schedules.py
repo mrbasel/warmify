@@ -1,8 +1,12 @@
 from datetime import datetime, timedelta, time, timezone
 from .models import Event
+from django.utils.timezone import localtime
 
 
 def generate_schedule(events):
+    for e in events:
+        e.timestamp = localtime(e.timestamp)
+
     if len(events) == 0:
         return [1 for i in range(24)]
 
@@ -14,27 +18,24 @@ def generate_schedule(events):
 
 
 def get_schedule(device_id):
-    last_weeks_day_start = datetime.combine(datetime.today(), time.min) - timedelta(
-        days=7
-    )
-    last_weeks_day_end = datetime.combine(datetime.today(), time.max) - timedelta(
-        days=7
-    )
-    last_weeks_day_events = (
-        Event.objects.filter(id=device_id)
-        .filter(timestamp__gte=last_weeks_day_start)
-        .filter(timestamp__lte=last_weeks_day_end)
+    last_weeks_day = datetime.today() - timedelta(days=7)
+    last_weeks_day_events = Event.objects.filter(
+        device=device_id,
+        timestamp__year=last_weeks_day.year,
+        timestamp__month=last_weeks_day.month,
+        timestamp__day=last_weeks_day.day,
     )
 
     if len(last_weeks_day_events) != 0:
         return generate_schedule(last_weeks_day_events)
 
-    yesterday_start = datetime.combine(datetime.today(), time.min) - timedelta(days=1)
-    yesterday_end = datetime.combine(datetime.today(), time.max) - timedelta(days=1)
-    yesterday_events = Event.objects.filter(timestamp__gte=yesterday_start).filter(
-        timestamp__lte=yesterday_end
+    yesterday_start = datetime.today() - timedelta(days=1)
+    yesterday_events = Event.objects.filter(
+        device=device_id,
+        timestamp__year=yesterday_start.year,
+        timestamp__month=yesterday_start.month,
+        timestamp__day=yesterday_start.day,
     )
-
     if len(yesterday_events) != 0:
         return generate_schedule(yesterday_events)
 
