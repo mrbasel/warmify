@@ -1,6 +1,5 @@
 {% extends "warmify_dashboard/base-dash.html" %}
 {% load static %}
-
 {% block head %}
 <link rel="stylesheet" href="{% static 'warmify_dashboard/index.css' %}">
 <script defer src="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta17/dist/libs/apexcharts/dist/apexcharts.min.js"></script>
@@ -114,6 +113,22 @@
                                 <div class="datagrid-title">Last ping</div>
                                 <div class="datagrid-content">{{ last_ping }}</div>
                             </div>
+                            <div class="datagrid-item">
+                                <div class="datagrid-title">Recorded temperature</div>
+                                <div class="datagrid-content">{{ ping.recorded_heater_temperature }}</div>
+                            </div>
+                            <div class="datagrid-item">
+                                <div class="datagrid-title">Recorded water level</div>
+                                <div class="datagrid-content">
+                                    {% if ping.recorded_waterlevel == 1 %}
+                                    Normal
+                                    {% elif ping.recorded_waterlevel == 0 %}
+                                    Low
+                                    {% else %}-
+                                    {% endif %}
+                                    </div>
+                            </div>
+                            {% include 'warmify_dashboard/components/toggle-heater-button.html' %}
                         </div>
                     </div>
                 </div>

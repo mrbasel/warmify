@@ -54,6 +54,7 @@ def fetch_dashboard_stats(device, day_range=1):
         "water_usage": Event.get_todays_usage(device_id),
         "events_count_by_hour": events_count_by_hour,
         "is_up": is_up,
+        "ping": last_ping,
         "last_ping": last_ping_timedelta,
     }
     return data
