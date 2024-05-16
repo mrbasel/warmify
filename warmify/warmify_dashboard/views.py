@@ -23,6 +23,9 @@ def index(request):
         "notifications": request.notifications,
         "schedule": schedule_to_string(schedule),
         "day_range": day_range,
+        "button_string": (
+            "Disable heater" if device.is_enabled_heater else "Turn on heater"
+        ),
     }
     return render(request, "warmify_dashboard/index.html", context)
 
@@ -143,3 +146,20 @@ def no_device(request):
 def settings(request):
     context = {"notifications": request.notifications}
     return render(request, "warmify_dashboard/settings.html", context=context)
+
+
+@login_required
+def toggle_heater_state(request):
+    device = request.user.get_device()
+    device.is_enabled_heater = not device.is_enabled_heater
+    device.save()
+    context = {
+        "button_string": (
+            "Disable heater" if device.is_enabled_heater else "Enable heater"
+        )
+    }
+    return render(
+        request,
+        "warmify_dashboard/components/toggle-heater-button.html",
+        context=context,
+    )

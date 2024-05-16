@@ -10,6 +10,7 @@ class IotDevice(models.Model):
     metadata = models.JSONField(default=dict, blank=True)
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     token = models.UUIDField(unique=True, default=uuid.uuid4)
+    is_enabled_heater = models.BooleanField(default=True)
 
     def __str__(self):
         return "{}'s device".format(self.owner.username)

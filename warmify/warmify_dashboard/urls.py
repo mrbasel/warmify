@@ -13,6 +13,7 @@ urlpatterns = [
     path("settings/", views.settings, name="settings"),
     path("notifications/", views.notifications, name="notifications"),
     path("mark_read/", views.mark_read, name="read_notifications"),
+    path("toggle_heater/", views.toggle_heater_state, name="toggle_heater"),
     path("setup_incomplete/", views.no_device, name="no_device"),
     path(
         "login/",
