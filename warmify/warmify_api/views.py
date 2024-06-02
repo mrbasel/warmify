@@ -98,7 +98,6 @@ def get_heater_status(request):
     if schedule[current_datetime.hour]:
         should_turn_on_heater = True
 
-    # 1 for turning off and 0 for turning on, don't ask me why
     if not device.is_enabled_heater:
-        return HttpResponse(1)
-    return HttpResponse(0 if should_turn_on_heater else 1)
+        return HttpResponse(0)
+    return HttpResponse(1 if should_turn_on_heater else 0)
