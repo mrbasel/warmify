@@ -1,0 +1,4 @@
+<form id="toggle-heater-form" class="d-inline" action="{% url 'toggle_heater' %}" method="post"  hx-post="{% url 'toggle_heater' %}" hx-trigger="click" hx-target="#toggle-heater-form" hx-swap="outerHTML" hx-confirm="Are you sure you want to turn off/on your heater?">
+    {% csrf_token %}
+    <button type="submit" class="btn">{{ button_string }}</button>
+</form>
