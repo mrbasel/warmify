@@ -69,18 +69,6 @@
                         <span class="nav-link-title">Events</span>
                       </a>
                     </li>
-                      {% url 'reports' as url %}
-                    <li class="nav-item warmify-nav-item {% if request.path == url %}warmify-active{% endif %}">
-                      <a class="nav-link" href="{{ url }}" >
-                        <span class="nav-link-title">Reports</span>
-                      </a>
-                    </li>
-                      {% url 'status' as url %}
-                    <li class="nav-item warmify-nav-item {% if request.path == url %}warmify-active{% endif %}">
-                        <a class="nav-link" href="{{ url }}" >
-                            <span class="nav-link-title">Status</span>
-                        </a>
-                    </li>
                     {% url 'notifications' as url %}
                     <li class="nav-item warmify-nav-item {% if request.path == url %}warmify-active{% endif %}">
                       <a class="nav-link" href="{{ url }}" >

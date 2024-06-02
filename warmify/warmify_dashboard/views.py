@@ -144,8 +144,26 @@ def no_device(request):
 
 @login_required
 def settings(request):
-    context = {"notifications": request.notifications}
+    context = {
+        "notifications": request.notifications,
+    }
     return render(request, "warmify_dashboard/settings.html", context=context)
+
+
+@login_required
+def system_settings(request):
+    context = {
+        "notifications": request.notifications,
+    }
+    return render(request, "warmify_dashboard/system_settings.html", context=context)
+
+
+@login_required
+def os_licences(request):
+    context = {
+        "notifications": request.notifications,
+    }
+    return render(request, "warmify_dashboard/licences.html", context=context)
 
 
 @login_required
