@@ -10,12 +10,9 @@ args = arg_parser.parse_args()
 
 TOKEN = args.token
 API_URL = "http://localhost:8000/api"
-# TEN_MINUTES = 600
-TEN_MINUTES = 1
-# ONE_HOUR = 3600
-# FOUR_HOURS = 36000
-ONE_HOUR = 2
-FOUR_HOURS = 4
+TEN_MINUTES = 600
+ONE_HOUR = 3600
+FOUR_HOURS = 36000
 
 heater_is_on = False
 
@@ -67,8 +64,8 @@ def main():
     t1.start()
     t2.start()
 
-    # t1.join()
-    # t2.join()
+    t1.join()
+    t2.join()
 
 
 if __name__ == "__main__":
