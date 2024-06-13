@@ -26,6 +26,20 @@ services:
       - 1337:80
     depends_on:
       - web
+  
+  redis:
+    image: redis
+    
+  celery:
+    build: ./warmify
+    command: celery --app=warmify worker --loglevel=info
+    volumes:
+      - ./warmify:/usr/src/app
+    env_file:
+      - ./.env.dev
+    depends_on:
+      - web
+      - redis
 
 volumes:
   postgres_data:

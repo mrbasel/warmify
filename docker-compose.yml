@@ -10,6 +10,7 @@ services:
       - ./.env.dev
     depends_on:
       - db
+
   db:
     image: postgres:15
     volumes:
@@ -18,6 +19,20 @@ services:
       - POSTGRES_USER=warmify
       - POSTGRES_PASSWORD=warmify
       - POSTGRES_DB=warmify_db
+
+  redis:
+    image: redis
+  
+  celery:
+    build: ./warmify
+    command: celery --app=warmify worker --loglevel=info
+    volumes:
+      - ./warmify:/usr/src/app
+    env_file:
+      - ./.env.dev
+    depends_on:
+      - web
+      - redis
 
 volumes:
   postgres_data:
