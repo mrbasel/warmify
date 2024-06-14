@@ -13,6 +13,7 @@ Our solution attempts to solve this problem by running the water heater only whe
 ## Technologies
 
 - Django
+- Celery
 - Tabler
 - HTMX
 
