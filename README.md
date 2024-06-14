@@ -1,6 +1,6 @@
 # Warmify dashboard
 
-A web-based dashboard for the Warmify smart heating system. Part of my teams project in our univesties senior project course.
+A web-based dashboard for the Warmify smart heating system. Part of my teams project in our university's senior project course.
 
 ![Warmify dashboard](./warmify-dashboard-screenshot.png)
 
